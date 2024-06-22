@@ -1,12 +1,20 @@
 <div class="flex flex-col items-center m-auto">
+  <button (click)="dropDecks()" class="bg-red-500 hover:bg-red-900 py-2 px-4">
+    Remover todos
+  </button>
   <div *ngFor="let deck of decks; index as id" class="flex flex-wrap justify-center gap-8 mt-9 mr-5 mb-5">
     Nome <b>{{deck.name}}</b> quantidade de cartas <b>{{deck.cards.length}}</b>
     <button (click)="buscar(id)" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
       Escolher
     </button>
+    <button (click)="removeDeck(id)" class="bg-red-500 hover:bg-red-900 py-2 px-4">
+      remover
+    </button>
   </div>
 </div>
-
+<div *ngIf="deck" class="flex flex-col items-center m-auto">
+Deck Selecionado: {{deck.name}}
+</div>
 
 <div *ngIf="deck" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of deck.cards"
