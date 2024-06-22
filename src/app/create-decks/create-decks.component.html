@@ -1,1 +1,25 @@
-<p>create-decks works!</p>
+<div class="py-4 flex gap-4 flex-wrap justify-center">
+  <igx-input-group type="border">
+    <input igxInput [(ngModel)]="name" id="name" name="name" placeholder="Nome Deck">
+  </igx-input-group>
+  <button [routerLink]="'/'" (click)="prepareSave()" class="bg-yellow-500 rounded py-2 px-4">
+    Create
+  </button>
+</div>
+<div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
+  <div *ngFor="let card of cards"
+       class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
+    <input class="absolute w-full h-full opacity-0 cursor-pointer z-10" type="checkbox" name="cards" id="cards"
+           (click)="selectCard(card)"
+           [checked]="CheckCardSelected(card)"
+           #checkbox/>
+
+    <img class="max-w-40" [ngClass]="{'opacity-100': checkbox.checked,'opacity-50': !checkbox.checked}"
+         [src]="card.images.large"/>
+  </div>
+</div>
+<div class="py-4 flex gap-4 flex-wrap justify-center">
+  <button [routerLink]="'/'" class="bg-blue-500 hover:bg-blue-900 py-2 px-4 mt-9 mr-5 mb-5">
+    Back
+  </button>
+</div>

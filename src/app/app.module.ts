@@ -8,6 +8,8 @@ import {HttpClientModule} from "@angular/common/http";
 import { MyDecksComponent } from './my-decks/my-decks.component';
 import { CreateDecksComponent } from './create-decks/create-decks.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {FormsModule} from "@angular/forms";
+import {IgxInputGroupModule} from "igniteui-angular";
 
 
 @NgModule({
@@ -22,6 +24,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    FormsModule,
+    IgxInputGroupModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

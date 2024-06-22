@@ -9,12 +9,12 @@ export class DecksService {
   constructor(private local: LocalService) {
   }
 
-  public addCard(card: Decks, decks: Decks[]): Decks[] {
+  public addDeck(card: Decks, decks: Decks[]): Decks[] {
     decks.push(card)
     return decks;
   }
 
-  public removeCard(index: number, decks: Decks[]) {
+  public removeDeck(index: number, decks: Decks[]) {
     decks.splice(index, 1);
     return decks;
   }
@@ -27,11 +27,11 @@ export class DecksService {
     return this.local.get('decks');
   }
 
-  public addDeck(decks: Decks[]): void {
+  public createDeck(decks: Decks[]): void {
     this.local.save('decks', decks);
   }
 
-  public removeDeck(): void {
+  public dropDeck(): void {
     this.local.remove('decks');
   }
 }

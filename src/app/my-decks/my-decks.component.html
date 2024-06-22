@@ -1,1 +1,16 @@
-<p>my-decks works!</p>
+<div class="flex flex-col items-center m-auto">
+  <div *ngFor="let deck of decks; index as id" class="flex flex-wrap justify-center gap-8 mt-9 mr-5 mb-5">
+    Nome <b>{{deck.name}}</b> quantidade de cartas <b>{{deck.cards.length}}</b>
+    <button (click)="buscar(id)" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
+      Escolher
+    </button>
+  </div>
+</div>
+
+
+<div *ngIf="deck" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
+  <div *ngFor="let card of deck.cards"
+       class="flex relative hover:scale-105 border-4 rounded-2xl">
+    <img class="max-w-40" [src]="card.images.large"/>
+  </div>
+</div>

@@ -1,45 +1,19 @@
-<div class="flex flex-col items-center gap-6 m-auto">
-  <div class="text-center">
+<div class="flex flex-col items-center m-auto">
     <img
       class="max-w-md"
       src="https://www.freepnglogos.com/uploads/pokemon-png/ash-and-pikachu-dashiesparkle-pokemon-png-29.png"
       alt="Pokemon logo"
     />
-  </div>
   <div class="flex flex-wrap justify-center gap-4">
-    <ng-container
-      [ngTemplateOutlet]="button"
-      [ngTemplateOutletContext]="{
-        text: 'Meus Baralhos',
-        url: 'list',
-        disabled : (decks.length == 0)
-      }"
-    ></ng-container>
-    <ng-container
-      [ngTemplateOutlet]="button"
-      [ngTemplateOutletContext]="{
-        text: 'Criar Baralho',
-        url: 'create'
-      }"
-    ></ng-container>
+    <button [routerLink]="'/list'" class="bg-yellow-500 rounded py-2 px-4 mt-9 mr-5 mb-5">
+      Meus Baralhos ({{decks.length}})
+    </button>
+    <button [routerLink]="'/create'" class="bg-yellow-500 rounded py-2 px-4 mt-9 mr-5 mb-5">
+      Criar Baralho
+    </button>
+  </div>
+  <div *ngIf="config">
+    Total pokemons existentes {{ config.totalCount }}
   </div>
 </div>
-<div *ngIf="config">
-<br>
-Pagina atual {{ config.page }}
-<br>
-Total pokemons por pargina {{ config.pageSize }}
-<br>
-Total pokemons {{ config.totalCount }}
-<br>
-Decks Salvo: {{ decks.length }}
-</div>
 
-
-<ng-template #button let-text="text" let-url="url" let-disabled="disabled">
-  <button class="bg-yellow-400 rounded font-medium shadow-lg" [routerLink]="'/' + url" [disabled]="disabled" [ngClass]="{
-      'opacity-50 pointer-events-auto cursor-no-drop': disabled
-    }">
-    {{ text }}
-  </button>
-</ng-template>
