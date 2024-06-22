@@ -6,8 +6,9 @@ import {MyDecksComponent} from "./my-decks/my-decks.component";
 
 const routes: Routes = [
   { path: '', component: HomeComponent },
-  { path: 'create', component: CreateDecksComponent },
   { path: 'list', component: MyDecksComponent },
+  { path: 'create', component: CreateDecksComponent },
+  { path: 'update/:id', component: CreateDecksComponent },
   { path: '**', redirectTo: '', pathMatch: 'full' },
 ];
 

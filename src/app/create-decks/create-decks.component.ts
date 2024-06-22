@@ -4,7 +4,8 @@ import {DecksService} from "../services/decks.service";
 import {ResultApi} from "../interfaces/api/result-api.interface";
 import {Decks} from "../interfaces/decks.interface";
 import {ConfigApiService} from "../services/config-api.service";
-import {Router} from "@angular/router";
+import {ActivatedRoute, Router} from "@angular/router";
+import {ConfigApi} from "../interfaces/storage/config-api.interface";
 
 @Component({
   selector: 'app-create-decks',
@@ -13,24 +14,30 @@ import {Router} from "@angular/router";
 })
 export class CreateDecksComponent implements OnInit {
   public decks: Decks[] = this.decksService.getDecks();
+  public getCards: ConfigApi = this.configService.getConfig();
   public cards: any[] = [];
-  public deck: any[] = [];
+  public deck: Decks = {'name':'', 'cards':[]};
   public name: string = '';
 
   constructor(private router: Router,
+              private activatedRoute: ActivatedRoute,
               private api: PokemonTcgService,
               private decksService: DecksService,
               private configService: ConfigApiService) {
   }
 
   ngOnInit(): void {
-    this.cards = this.configService.getConfig().data;
+    if (this.activatedRoute.snapshot.params['id']){
+      this.deck = this.decksService.getDeck(this.activatedRoute.snapshot.params['id']);
+      this.name = this.deck.name;
+      this.cards = this.deck.cards;
+    }
   }
 
   public find() {
     this.api.findCardByName('PIKACHU').subscribe({
         next: (result: ResultApi): void => {
-          this.cards = result.data;
+          this.getCards = result;
         },
         error: () => {
           console.log('erro');
@@ -41,23 +48,23 @@ export class CreateDecksComponent implements OnInit {
   }
 
   public CheckCardSelected(card: any): boolean {
-    return this.deck.filter((cards): boolean => cards.id == card.id).length > 0;
+    return this.cards.filter((cards): boolean => cards.id == card.id).length > 0;
   }
 
   public selectCard(card: any): void {
     if (this.CheckCardSelected(card)) {
-      this.deck = this.deck.filter((cards): boolean => cards != card);
+      this.cards = this.cards.filter((cards): boolean => cards != card);
       return;
     }
-    this.deck.push(card);
+    this.cards.push(card);
   }
 
   public async prepareSave(): Promise<void> {
     if (this.validName()) {
       await this.save(this.name);
-      await this.router.navigate(['']);
       return ;
     }
+    alert('erro');
   }
 
   private validName(): boolean {
@@ -71,8 +78,19 @@ export class CreateDecksComponent implements OnInit {
   public async save(name: string): Promise<void> {
     this.decks = this.decksService.getDecks();
     if (!this.CheckDecksExist(name)) {
-      this.decks = this.decksService.addDeck({'name': name, 'cards': this.deck}, this.decks);
+      this.decks = this.decksService.addDeck({'name': name, 'cards': this.cards}, this.decks);
       await this.decksService.createDeck(this.decks);
+      await this.router.navigate(['']);
+      return;
     }
+
+    if (this.activatedRoute.snapshot.params['id']){
+      this.decks = this.decksService.updateDeck(this.activatedRoute.snapshot.params['id'], this.name, this.cards, this.decks);
+      await this.decksService.createDeck(this.decks);
+      await this.router.navigate(['list']);
+      return;
+    }
+
+    alert('Nome Duplicado');
   }
 }

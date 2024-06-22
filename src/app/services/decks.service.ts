@@ -14,6 +14,12 @@ export class DecksService {
     return decks;
   }
 
+  public updateDeck(index:number, name: string, cards: any, decks: Decks[]): Decks[] {
+    decks[index].name = name;
+    decks[index].cards = cards;
+    return decks;
+  }
+
   public removeDeck(index: number, decks: Decks[]) {
     decks.splice(index, 1);
     return decks;

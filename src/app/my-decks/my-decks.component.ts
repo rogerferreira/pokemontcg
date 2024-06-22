@@ -19,10 +19,13 @@ export class MyDecksComponent {
               private decksService: DecksService) {
   }
 
-  public buscar(id: number): void{
+  public get(id: number): void{
     this.deck = this.decksService.getDeck(id);
   }
 
+  public update(id: number){
+    this.router.navigate(['/update/' + id]);
+  }
   public async removeDeck(id: number): Promise<void>{
     this.decks = this.decksService.removeDeck(id, this.decks);
     await this.decksService.createDeck(this.decks);
