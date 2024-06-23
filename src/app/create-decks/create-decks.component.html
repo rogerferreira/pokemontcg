@@ -6,6 +6,14 @@
     Create
   </button>
 </div>
+<div class="py-4 flex gap-4 flex-wrap justify-center">
+  <igx-input-group type="border">
+    <input igxInput [(ngModel)]="cardName" id="cardName" name="cardName" placeholder="Buscar cartas">
+  </igx-input-group>
+  <button (click)="find()" class="bg-blue-500 rounded py-2 px-4">
+    Buscar
+  </button>
+</div>
 <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of getCards.data"
        class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">

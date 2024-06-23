@@ -3,5 +3,6 @@ export interface ResultApi {
   data: any[],
   page: number,
   pageSize: number,
+  maxPage: number,
   totalCount: number
 }

@@ -18,6 +18,7 @@ export class CreateDecksComponent implements OnInit {
   public cards: any[] = [];
   public deck: Decks = {'name':'', 'cards':[]};
   public name: string = '';
+  public cardName: string = '';
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -35,7 +36,7 @@ export class CreateDecksComponent implements OnInit {
   }
 
   public find() {
-    this.api.findCardByName('PIKACHU').subscribe({
+    this.api.findCardByName(this.cardName).subscribe({
         next: (result: ResultApi): void => {
           this.getCards = result;
         },
@@ -51,7 +52,16 @@ export class CreateDecksComponent implements OnInit {
     return this.cards.filter((cards): boolean => cards.id == card.id).length > 0;
   }
 
+  public CheckCardNameRepet(card: any): boolean {
+    return this.cards.filter((cards): boolean => cards.name == card.name).length == 4;
+  }
+
   public selectCard(card: any): void {
+    if (this.CheckCardNameRepet(card)){
+      console.log('Erro nome repetido');
+      return;
+    }
+
     if (this.CheckCardSelected(card)) {
       this.cards = this.cards.filter((cards): boolean => cards != card);
       return;
@@ -64,7 +74,6 @@ export class CreateDecksComponent implements OnInit {
       await this.save(this.name);
       return ;
     }
-    alert('erro');
   }
 
   private valid(): boolean {

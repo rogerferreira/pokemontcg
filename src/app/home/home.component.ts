@@ -25,24 +25,25 @@ export class HomeComponent implements OnInit {
   }
 
   private getCards(): void {
-    this.api.getCards().subscribe({
-        next: (data: ResultApi): void => {
-          if (this.configService.getConfig() === null) {
-            this.configService.addConfig( {
-                'page': data.page,
-                'data': data.data,
-                'pageSize': data.pageSize,
-                'totalCount': data.totalCount
-              }
-            );
-          }
-          this.config = this.configService.getConfig();
-        },
-        error: ():void => {
-          console.log('erro');
-        },
-        complete: () => console.log('Home finalizou')
-      }
-    );
+    if (this.configService.getConfig() === null) {
+      this.api.getCards().subscribe({
+          next: (data: ResultApi): void => {
+              this.configService.addConfig( {
+                  'page': data.page,
+                  'data': data.data,
+                  'pageSize': data.pageSize,
+                  'maxPage':  Math.round((data.totalCount / 60)),
+                  'totalCount': data.totalCount
+                }
+              );
+            this.config = this.configService.getConfig();
+          },
+          error: ():void => {
+            console.log('erro');
+          },
+          complete: () => console.log('Home finalizou')
+        }
+      );
+    }
   }
 }
