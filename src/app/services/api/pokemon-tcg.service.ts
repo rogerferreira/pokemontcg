@@ -2,13 +2,14 @@ import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {ResultApi} from "../../interfaces/api/result-api.interface";
+import {environment} from "../../../environments/environment";
 @Injectable({
   providedIn: 'root'
 })
 export class PokemonTcgService {
   private params: string = '';
   private pageSize: number = 60;
-  private apiUrl: string = 'https://api.pokemontcg.io/v2/cards';
+  private apiUrl: string = environment.api;
 
   constructor(private http: HttpClient) {
   }
