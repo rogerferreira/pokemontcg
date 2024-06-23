@@ -14,6 +14,7 @@ import {ConfigApiService} from "../services/config-api.service";
 export class HomeComponent implements OnInit {
   public decks: Decks[]  = this.decksService.getDecks();
   public config: ConfigApi = this.configService.getConfig();
+  public loader: boolean = false;
 
   constructor(private api: PokemonTcgService,
               private decksService: DecksService,
@@ -26,6 +27,7 @@ export class HomeComponent implements OnInit {
 
   private getCards(): void {
     if (this.configService.getConfig() === null) {
+      this.loader = true;
       this.api.getCards().subscribe({
           next: (data: ResultApi): void => {
               this.configService.addConfig( {
@@ -41,7 +43,7 @@ export class HomeComponent implements OnInit {
           error: ():void => {
             console.log('erro');
           },
-          complete: () => console.log('Home finalizou')
+          complete: () => this.loader = false
         }
       );
     }

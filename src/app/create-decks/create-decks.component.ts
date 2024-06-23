@@ -20,6 +20,8 @@ export class CreateDecksComponent implements OnInit {
   public name: string = '';
   public cardName: string = '';
   public selected:  number = 1;
+  public update:boolean = false;
+  public loader:boolean = false;
 
   @ViewChild('divOverlay') divOverlay!: ElementRef;
   @ViewChild('imageZoom') imageZoom!: ElementRef;
@@ -32,13 +34,15 @@ export class CreateDecksComponent implements OnInit {
 
   ngOnInit(): void {
     if (this.activatedRoute.snapshot.params['id']){
+      this.update = true;
       this.deck = this.decksService.getDeck(this.activatedRoute.snapshot.params['id']);
       this.name = this.deck.name;
       this.cards = this.deck.cards;
     }
   }
 
-  public find() {
+  public find(): void {
+    this.loader = true;
     this.api.findCardByName(this.cardName).subscribe({
         next: (result: ResultApi): void => {
           this.getCards.data = result.data;
@@ -47,11 +51,12 @@ export class CreateDecksComponent implements OnInit {
         error: () => {
           console.log('erro');
         },
-        complete: () => console.log('FInalizou')
+        complete: ():boolean => this.loader = false
       }
     );
   }
   public findPage(id: number){
+    this.loader = true;
     this.api.getCards(id).subscribe({
         next: (data: ResultApi): void => {
            this.getCards.data = data.data;
@@ -60,7 +65,7 @@ export class CreateDecksComponent implements OnInit {
         error: ():void => {
           console.log('erro');
         },
-        complete: () => console.log('Home finalizou')
+        complete: (): boolean => this.loader = false
       }
     );
   }
@@ -118,7 +123,7 @@ export class CreateDecksComponent implements OnInit {
       return;
     }
 
-    if (this.activatedRoute.snapshot.params['id']){
+    if (this.update){
       this.decks = this.decksService.updateDeck(this.activatedRoute.snapshot.params['id'], this.name, this.cards, this.decks);
       await this.decksService.createDeck(this.decks);
       await this.router.navigate(['list']);
