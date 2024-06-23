@@ -60,15 +60,23 @@ export class CreateDecksComponent implements OnInit {
   }
 
   public async prepareSave(): Promise<void> {
-    if (this.validName()) {
+    if (this.valid()) {
       await this.save(this.name);
       return ;
     }
     alert('erro');
   }
 
-  private validName(): boolean {
-    return !(this.name.length < 3 || this.name.length > 20);
+  private valid(): boolean {
+    if ((this.name.length < 3 || this.name.length > 20)){
+      console.log('Erro Nome');
+      return false;
+    }
+    if ((this.cards.length < 24 || this.name.length > 60)){
+      console.log('Erro card');
+      return false;
+    }
+    return true;
   }
 
   private CheckDecksExist(name: string): boolean {
