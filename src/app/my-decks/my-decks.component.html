@@ -19,7 +19,18 @@
   </div>
 </div>
 <div *ngIf="deck" class="flex flex-col items-center m-auto">
-Deck Selecionado: {{deck.name}}
+  Selected Deck: {{deck.name}}<br>
+  Cards typeFind :<br>
+  <div *ngFor="let item of countCards.typeFind">
+    {{item.name}} : {{item.value}}<br>
+  </div>
+  Cards Total : {{deck.cards.length}}<br>
+  Cards Pokémon : {{getCardsCountSuperType('Pokémon')}}<br>
+  Cards Trainer : {{getCardsCountSuperType('Trainer')}}<br>
+  Cards Energy : {{getCardsCountSuperType('Energy')}}<br>
+  Cards multipleType : {{countCards.multipleType}}<br>
+  Cards uniqueType : {{countCards.uniqueType}}<br>
+
 </div>
 
 <div *ngIf="deck" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">

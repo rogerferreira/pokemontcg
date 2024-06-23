@@ -39,7 +39,8 @@ export class CreateDecksComponent implements OnInit {
   public find() {
     this.api.findCardByName(this.cardName).subscribe({
         next: (result: ResultApi): void => {
-          this.getCards = result;
+          this.getCards.data = result.data;
+          this.cardName = '';
         },
         error: () => {
           console.log('erro');
