@@ -1,34 +1,83 @@
-<div class="justify-center m-8 w-40 content-center">
-  <igx-select [(ngModel)]="selected">
-    <label igxLabel>Page</label>
-    <igx-hint>Selected Page Cards</igx-hint>
-    <igx-select-item *ngFor="let  page of getCards.maxPage" [value]="page" (click)="findPage(page)">
-      {{page}}
-    </igx-select-item>
-  </igx-select>
+<div class="flex mx-auto justify-center items-center">
+  <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 m-8">
+    <div class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] text-[#374151] shadow-xl">
+      <div class="flex flex-col p-8 h-full">
+        <div class="text-3xl  font-bold pb-6">Criar</div>
+        <div class="text-lg pb-12">Precisa se escolher de 24 a 60 cartas, podendo ter se repetir apenas 4 do mesmo nome.</div>
+        <div class="text-lg">Selecionadas: {{cards.length}} <br>Falta: {{cards.length > 24 ? 0: (24 - cards.length)}}</div>
+        <div class="flex flex-col gap-3  text-base">
+          <div class="flex flex-row gap-3">
+            <div class="text-{{(name.length > 3 && name.length < 40)? 'green': 'red'}}-600">
+              <svg *ngIf="!(name.length > 3 && name.length < 40)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+              </svg>
+              <svg *ngIf="(name.length > 3 && name.length < 40)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </div>
+            <div class="font-bold">Nome Deck</div>
+          </div>
+          <div class="flex flex-row gap-3">
+            <div class="text-{{(cards.length > 24 && cards.length < 60)? 'green': 'red'}}-600">
+              <svg *ngIf="!(cards.length > 24 && cards.length < 60)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+              </svg>
+              <svg *ngIf="(cards.length > 24 && cards.length < 60)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">
+                <path d="M20 6 9 17l-5-5"></path>
+              </svg>
+            </div>
+            <div>Quantidade de cartas 24+</div>
+          </div>
+        </div>
+        <div class="flex flex-grow"></div>
+        <div class="flex pt-10">
+          <igx-input-group type="border">
+            <label igxLabel>Name Deck</label>
+            <input igxInput [(ngModel)]="name" id="name" name="name">
+          </igx-input-group>
+          <button [disabled]="(!(cards.length > 24 && cards.length < 60) || !(name.length > 3 && name.length < 40))"
+                  (click)="prepareSave()"
+                  [ngClass]="{
+                    'opacity-50 pointer-events-auto cursor-no-drop': (!(cards.length > 24 && cards.length < 60) || !(name.length > 3 && name.length < 40))
+                  }"
+                  class="w-8/12 bg-yellow-500 hover:bg-yellow-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+            Create
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] text-[#374151] shadow-xl">
+      <div class="flex flex-col p-8 h-full">
+        <div class="text-3xl  font-bold pb-6">Pequisar</div>
+        <div class="text-lg pb-12">Você pode buscar as cartas por nome ou pagina.</div>
+        <div class="flex flex-col gap-3  text-base">
+        </div>
+        <div class="flex items-center">
+          <igx-select class="w-full" [(ngModel)]="selected">
+            <label igxLabel>Page</label>
+            <igx-select-item *ngFor="let  page of getCards.maxPage" [value]="page" (click)="findPage(page)">
+              {{page}}
+            </igx-select-item>
+          </igx-select>
+        </div>
+        <div class="flex flex-grow"></div>
+        <div class="flex">
+          <igx-input-group class="w-full" type="border">
+            <label igxLabel>Name Card</label>
+            <input igxInput [(ngModel)]="cardName" id="cardName" name="cardName">
+          </igx-input-group>
+        </div>
+
+        <div class="flex">
+          <button (click)="find()" class="w-full bg-blue-500 hover:bg-blue-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+            Pesquisar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
 
-<div class="py-4 flex gap-4 flex-wrap justify-center">
-  <igx-input-group type="border">
-    <input igxInput [(ngModel)]="name" id="name" name="name">
-    <igx-hint>Name Deck</igx-hint>
-  </igx-input-group>
-  <button (click)="prepareSave()" class="bg-yellow-500 rounded px-4">
-    Create
-  </button>
-</div>
-<div class="py-4 flex gap-4 flex-wrap justify-center">
-  <igx-input-group type="border">
-    <input igxInput [(ngModel)]="cardName" id="cardName" name="cardName">
-    <igx-hint>Find Name Card</igx-hint>
-  </igx-input-group>
-  <button (click)="find()" class="bg-blue-500 rounded px-4">
-    Find
-  </button>
-</div>
-<div class="py-4 flex gap-4 flex-wrap justify-center">
-  Selected Cards: {{cards.length}} <br>Mandatory Cards: {{cards.length > 24 ? 0: (24 - cards.length)}}
-</div>
 <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of getCards.data"
        class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
