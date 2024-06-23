@@ -1,27 +1,32 @@
 # Pokemon
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 16.2.0.
+Aplicação para consultar de cartas na api (https://docs.pokemontcg.io/#api_v1cards_list) e armazenamento de decks
 
-## Development server
+Todo armazenamento dos baralhos feito no local storage, é utilizado session storage para salvamento do retorno da api, para ganhar agilidade.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+## Especificações Técnicas
 
-## Code scaffolding
+- Angular - 16.2.0
+- Tailwind CSS - 3.4.4
+- Ignite UI (Infragistics) - 16.1.3
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Pré Requisitos
+Lista de baralhos
+- O usuário pode ver seus baralhos;
+- O usuário pode criar um novo baralho;
+- O usuário pode remover um baralho;
+- O usuário pode editar um baralho;
+- O usuário pode clicar num baralho para visualizar seus detalhes.
 
-## Build
+Criação de um baralho
+- O usuário pode colocar um nome no seu baralho;
+- O usuário pode inserir cartas no baralho;
+- O baralho tem que ter no mínimo 24 cartas e no máximo 60;
+- Só podem ter 4 cartas com o mesmo nome, no baralho. (Nome não id);
+- Após salvar o baralho voltamos para a página de lista de baralhos atualizada;
+- O baralho será salvo apenas em memória.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+Detalhes do baralho
+- O usuário consegue ver quantos pokemons e cartas de treinador existem no baralho. (atributo supertype)
+- O usuário consegue ver de quantas cores é o baralho. quantos types únicos existem no baralho.
 
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
