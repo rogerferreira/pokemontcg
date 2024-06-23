@@ -71,13 +71,12 @@ export class CreateDecksComponent implements OnInit {
   }
 
   public selectCard(card: any): void {
-    if (this.CheckCardNameRepet(card)){
-      console.log('Erro nome repetido');
+    if (this.CheckCardSelected(card)) {
+      this.cards = this.cards.filter((cards): boolean => cards.id != card.id);
       return;
     }
-
-    if (this.CheckCardSelected(card)) {
-      this.cards = this.cards.filter((cards): boolean => cards != card);
+    if (this.CheckCardNameRepet(card)){
+      console.log('Erro nome repetido');
       return;
     }
     this.cards.push(card);
@@ -95,7 +94,7 @@ export class CreateDecksComponent implements OnInit {
       console.log('Erro Nome');
       return false;
     }
-    if ((this.cards.length < 24 || this.name.length > 60)){
+    if ((this.cards.length < 24 || this.cards.length > 60)){
       console.log('Erro card');
       return false;
     }

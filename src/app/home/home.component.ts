@@ -32,7 +32,7 @@ export class HomeComponent implements OnInit {
                   'page': data.page,
                   'data': data.data,
                   'pageSize': data.pageSize,
-                  'maxPage':  Array(Math.round(17000 / 60)).fill(1).map((x,i)=>i),
+                  'maxPage':  Array(Math.round(17000 / 60)).fill(0).map((x,i)=>i+1),
                   'totalCount': data.totalCount
                 }
               );
