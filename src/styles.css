@@ -2,3 +2,45 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.zoom-button {
+  margin-bottom: 5px;
+  padding: 5px;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.image-container {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+
+.overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(51, 51, 51, 0.8);
+  z-index: 9999;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-popup {
+  position: relative;
+  max-width: 80%;
+  max-height: 80%;
+}
+
+#imageZoom {
+  display: block;
+  margin: 0 auto;
+  max-height: 500px;
+}

@@ -1,12 +1,13 @@
 <div class="flex flex-col items-center m-auto"><br>
   <button [routerLink]="'/'" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
     Back
-  </button><br>
+  </button>
+  <br>
   <button (click)="dropDecks()" class="bg-red-500 hover:bg-red-900 py-2 px-4">
     Remover todos
   </button>
   <div *ngFor="let deck of decks; index as id" class="flex flex-wrap justify-center gap-8 mt-9 mr-5 mb-5">
-    Nome <b>{{deck.name}}</b> quantidade de cartas <b>{{deck.cards.length}}</b>
+    Nome <b>{{ deck.name }}</b> quantidade de cartas <b>{{ deck.cards.length }}</b>
     <button (click)="get(id)" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
       Exibir
     </button>
@@ -18,24 +19,31 @@
     </button>
   </div>
 </div>
+
 <div *ngIf="deck" class="flex flex-col items-center m-auto">
-  Selected Deck: {{deck.name}}<br>
+  Selected Deck: {{ deck.name }}<br>
   Cards typeFind :<br>
   <div *ngFor="let item of countCards.typeFind">
-    {{item.name}} : {{item.value}}<br>
+    {{ item.name }} : {{ item.value }}<br>
   </div>
-  Cards Total : {{deck.cards.length}}<br>
-  Cards Pokémon : {{getCardsCountSuperType('Pokémon')}}<br>
-  Cards Trainer : {{getCardsCountSuperType('Trainer')}}<br>
-  Cards Energy : {{getCardsCountSuperType('Energy')}}<br>
-  Cards multipleType : {{countCards.multipleType}}<br>
-  Cards uniqueType : {{countCards.uniqueType}}<br>
+  Cards Total : {{ deck.cards.length }}<br>
+  Cards Pokémon : {{ getCardsCountSuperType('Pokémon') }}<br>
+  Cards Trainer : {{ getCardsCountSuperType('Trainer') }}<br>
+  Cards Energy : {{ getCardsCountSuperType('Energy') }}<br>
+  Cards multipleType : {{ countCards.multipleType }}<br>
+  Cards uniqueType : {{ countCards.uniqueType }}<br>
 
 </div>
-
+<div class="p-4">
+  <div class="overlay" id="divOverlay" #divOverlay (click)="closeImage()">
+    <div class="image-popup">
+      <img id="imageZoom" src="" alt="" #imageZoom>
+    </div>
+  </div>
+</div>
 <div *ngIf="deck" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of deck.cards"
        class="flex relative hover:scale-105 border-4 rounded-2xl">
-    <img class="max-w-40" [src]="card.images.large"/>
+    <img class="max-w-40" [src]="card.images.small" (click)="openImage(card)"/>
   </div>
 </div>

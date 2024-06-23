@@ -38,7 +38,14 @@
            #checkbox/>
 
     <img class="max-w-40" [ngClass]="{'opacity-100': checkbox.checked,'opacity-50': !checkbox.checked}"
-         [src]="card.images.large"/>
+         [src]="card.images.small"/>
+  </div>
+</div>
+<div class="p-4">
+  <div class="overlay" id="divOverlay" #divOverlay (click)="closeImage()">
+    <div class="image-popup">
+      <img id="imageZoom" src="" alt="" #imageZoom>
+    </div>
   </div>
 </div>
 <div class="py-4 flex gap-4 flex-wrap justify-center">

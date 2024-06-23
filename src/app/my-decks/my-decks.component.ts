@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Decks} from "../interfaces/decks.interface";
 import {PokemonTcgService} from "../services/api/pokemon-tcg.service";
 import {DecksService} from "../services/decks.service";
@@ -21,6 +21,8 @@ export class MyDecksComponent implements OnInit {
   public deck: Decks = this.decksService.getDeck(0);
   public countCards: countCard = {'multipleType': 0, 'uniqueType': 0, 'typeFind': []};
 
+  @ViewChild('divOverlay') divOverlay!: ElementRef;
+  @ViewChild('imageZoom') imageZoom!: ElementRef;
   constructor(private router: Router,
               private api: PokemonTcgService,
               private decksService: DecksService) {
@@ -80,5 +82,14 @@ export class MyDecksComponent implements OnInit {
   public async dropDecks(): Promise<void> {
     await this.decksService.dropDeck();
     await this.router.navigate(['']);
+  }
+
+  openImage(card: any): void {
+    this.imageZoom.nativeElement.src = card.images.large;
+    this.divOverlay.nativeElement.style.display = 'flex';
+  }
+
+  closeImage(): void {
+    this.divOverlay.nativeElement.style.display = 'none';
   }
 }

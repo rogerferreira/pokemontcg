@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {PokemonTcgService} from "../services/api/pokemon-tcg.service";
 import {DecksService} from "../services/decks.service";
 import {ResultApi} from "../interfaces/api/result-api.interface";
@@ -21,6 +21,8 @@ export class CreateDecksComponent implements OnInit {
   public cardName: string = '';
   public selected:  number = 1;
 
+  @ViewChild('divOverlay') divOverlay!: ElementRef;
+  @ViewChild('imageZoom') imageZoom!: ElementRef;
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
               private api: PokemonTcgService,
@@ -80,6 +82,7 @@ export class CreateDecksComponent implements OnInit {
       console.log('Erro nome repetido');
       return;
     }
+    this.openImage(card);
     this.cards.push(card);
   }
 
@@ -124,4 +127,13 @@ export class CreateDecksComponent implements OnInit {
 
     alert('Nome Duplicado');
   }
+  openImage(card: any): void {
+    this.imageZoom.nativeElement.src = card.images.large;
+    this.divOverlay.nativeElement.style.display = 'flex';
+  }
+
+  closeImage(): void {
+    this.divOverlay.nativeElement.style.display = 'none';
+  }
+
 }
