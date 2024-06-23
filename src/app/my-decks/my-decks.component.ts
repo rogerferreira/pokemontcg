@@ -20,6 +20,7 @@ export class MyDecksComponent implements OnInit {
   public decks: Decks[] = this.decksService.getDecks();
   public deck: Decks = this.decksService.getDeck(0);
   public countCards: countCard = {'multipleType': 0, 'uniqueType': 0, 'typeFind': []};
+  public detail:boolean = false;
 
   @ViewChild('divOverlay') divOverlay!: ElementRef;
   @ViewChild('imageZoom') imageZoom!: ElementRef;
@@ -29,7 +30,6 @@ export class MyDecksComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getCardsCountType();
   }
 
   public get(id: number): void {
@@ -67,6 +67,7 @@ export class MyDecksComponent implements OnInit {
     });
     this.countCards.multipleType = multipleType.length;
     this.countCards.uniqueType = uniqueType.length;
+    this.detail = true;
   }
 
   public update(id: number) {

@@ -1,39 +1,77 @@
-<div class="flex flex-col items-center m-auto"><br>
-  <button [routerLink]="'/'" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
-    Back
-  </button>
-  <br>
-  <button (click)="dropDecks()" class="bg-red-500 hover:bg-red-900 py-2 px-4">
-    Remover todos
-  </button>
-  <div *ngFor="let deck of decks; index as id" class="flex flex-wrap justify-center gap-8 mt-9 mr-5 mb-5">
-    Nome <b>{{ deck.name }}</b> quantidade de cartas <b>{{ deck.cards.length }}</b>
-    <button (click)="get(id)" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
-      Exibir
-    </button>
-    <button (click)="update(id)" class="bg-blue-500 hover:bg-blue-900 py-2 px-4">
-      Editar
-    </button>
-    <button (click)="removeDeck(id)" class="bg-red-500 hover:bg-red-900 py-2 px-4">
-      Remover
-    </button>
+<div class="flex mx-auto justify-center items-center">
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 m-8">
+    <div *ngFor="let deck of decks; index as id"
+         class="flex flex-col rounded-2xl w-full xl:w-96 bg-slate-200 text-[#374151] shadow-xl">
+      <div class="flex flex-col p-8 h-full">
+        <div class="text-3xl  font-bold pb-6">{{ deck.name }}</div>
+        <div class=" text-lg pb-12">Quantidade de cartas {{ deck.cards.length }}</div>
+        <div class="flex pt-10">
+          <button (click)="get(id)"
+                  class="w-full bg-yellow-500 hover:bg-yellow-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+            Detalhes
+          </button>
+          <button (click)="update(id)"
+                  class="w-full bg-blue-500 hover:bg-blue-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+            Editar
+          </button>
+          <button (click)="removeDeck(id)"
+                  class="w-full bg-red-500 hover:bg-red-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+            Remover
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div *ngIf="deck" class="flex flex-col items-center m-auto">
-  Selected Deck: {{ deck.name }}<br>
-  Cards typeFind :<br>
-  <div *ngFor="let item of countCards.typeFind">
-    {{ item.name }} : {{ item.value }}<br>
-  </div>
-  Cards Total : {{ deck.cards.length }}<br>
-  Cards Pokémon : {{ getCardsCountSuperType('Pokémon') }}<br>
-  Cards Trainer : {{ getCardsCountSuperType('Trainer') }}<br>
-  Cards Energy : {{ getCardsCountSuperType('Energy') }}<br>
-  Cards multipleType : {{ countCards.multipleType }}<br>
-  Cards uniqueType : {{ countCards.uniqueType }}<br>
 
+<div *ngIf="detail" class="relative overflow-hidden rounded-lg">
+  <div class="flex mx-auto justify-center items-center">
+    {{ deck.name }}
+  </div>
+  <div class="flex mx-auto justify-center items-center m-2">
+    <table class="table-fixed w-50% text-left">
+      <thead class="uppercase bg-[#6b7280] text-[#e5e7eb]">
+      <tr>
+        <td class="py-2 border text-center  p-4">Total</td>
+        <td class="py-2 border text-center  p-4">Pokémon</td>
+        <td class="py-2 border text-center  p-4">Trainer</td>
+        <td class="py-2 border text-center  p-4">Energy</td>
+        <td class="py-2 border text-center  p-4">Multiple Type</td>
+        <td class="py-2 border text-center  p-4">Unique Type</td>
+      </tr>
+      </thead>
+      <tbody class="bg-white text-gray-500 bg-[#FFFFFF] text-[#6b7280]">
+      <tr class="py-5">
+        <td class="py-5 border text-center  p-4">{{ deck.cards.length }}</td>
+        <td class="py-5 border text-center  p-4">{{ getCardsCountSuperType('Pokémon') }}</td>
+        <td class="py-5 border text-center  p-4">{{ getCardsCountSuperType('Trainer') }}</td>
+        <td class="py-5 border text-center  p-4">{{ getCardsCountSuperType('Energy') }}</td>
+        <td class="py-5 border text-center  p-4">{{ countCards.multipleType }}</td>
+        <td class="py-5 border text-center  p-4">{{ countCards.uniqueType }}</td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="flex mx-auto justify-center items-center m-2">
+    <table class="table-fixed w-50% text-left">
+      <thead class="uppercase bg-[#6b7280] text-[#e5e7eb]">
+      <tr>
+        <td *ngFor="let item of countCards.typeFind" class="py-2 border text-center  p-4">{{ item.name }}
+        </td>
+      </tr>
+      </thead>
+      <tbody class="bg-white text-gray-500 bg-[#FFFFFF] text-[#6b7280]">
+      <tr class="py-5">
+        <td *ngFor="let item of countCards.typeFind" class="py-5 border text-center  p-4">{{ item.value }}
+        </td>
+      </tr>
+      </tbody>
+    </table>
+  </div>
 </div>
+
+
 <div class="p-4">
   <div class="overlay" id="divOverlay" #divOverlay (click)="closeImage()">
     <div class="image-popup">
@@ -41,9 +79,23 @@
     </div>
   </div>
 </div>
-<div *ngIf="deck" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
+<div *ngIf="detail" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of deck.cards"
        class="flex relative hover:scale-105 border-4 rounded-2xl">
     <img class="max-w-40" [src]="card.images.small" (click)="openImage(card)"/>
+  </div>
+</div>
+
+
+<div class="flex flex-col items-center m-auto">
+  <div class="flex-row">
+    <button [routerLink]="'/'"
+            class="bg-blue-500 hover:bg-blue-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+      Home
+    </button>
+    <button (click)="dropDecks()"
+            class="bg-red-500 hover:bg-red-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+      Excluir todos baralhos
+    </button>
   </div>
 </div>

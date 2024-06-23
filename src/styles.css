@@ -3,23 +3,6 @@
 @tailwind components;
 @tailwind utilities;
 
-.zoom-button {
-  margin-bottom: 5px;
-  padding: 5px;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-}
-
-.image-container {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-
-
 .overlay {
   display: none;
   position: fixed;
