@@ -7,12 +7,16 @@
     <h1 class="font-bold text-[#4B5563] text-[#4B5563] my-auto">Pokemon</h1>
   </div>
   <div class="flex justify-center mx-auto items-center gap-3 pb-4">
-    <button [routerLink]="'/list'" class=" bg-yellow-500 rounded py-2 px-4 mt-9 mr-5 mb-5">
+    <button [routerLink]="'/list'" class=" bg-yellow-500 rounded py-2 px-4 mt-9 mr-5 mb-5"
+            [disabled]="decks.length == 0"
+            [ngClass]="{
+                    'opacity-50 pointer-events-auto cursor-no-drop': decks.length == 0
+                  }">
       Meus Baralhos ({{decks.length}})
     </button>
     <button [routerLink]="'/create'" class="bg-yellow-500 rounded py-2 px-4 mt-9 mr-5 mb-5">
       Criar Baralho
     </button>
   </div>
-  <div class="text-sm font-light text-[#6B7280] pb-8 mx-auto">Monte seu baralho e seja um mestre Pokemon, possuímos {{ config.totalCount }} cartas disponíveis</div>
+  <div *ngIf="config" class="text-sm font-light text-[#6B7280] pb-8 mx-auto">Monte seu baralho e seja um mestre Pokemon, possuímos {{ config.totalCount }} cartas disponíveis</div>
 </div>
