@@ -1,19 +1,35 @@
+<div class="justify-center m-8 w-40 content-center">
+  <igx-select [(ngModel)]="selected">
+    <label igxLabel>Page</label>
+    <igx-hint>Pag of cards</igx-hint>
+    <igx-select-item *ngFor="let  page of getCards.maxPage" [value]="page" (click)="findPage(page)">
+      {{page}}
+    </igx-select-item>
+  </igx-select>
+</div>
+
+
+
 <div class="py-4 flex gap-4 flex-wrap justify-center">
   <igx-input-group type="border">
-    <input igxInput [(ngModel)]="name" id="name" name="name" placeholder="Nome Deck">
+    <input igxInput [(ngModel)]="name" id="name" name="name">
+    <igx-hint>Name Deck</igx-hint>
   </igx-input-group>
-  <button (click)="prepareSave()" class="bg-yellow-500 rounded py-2 px-4">
+  <button (click)="prepareSave()" class="bg-yellow-500 rounded px-4">
     Create
   </button>
 </div>
 <div class="py-4 flex gap-4 flex-wrap justify-center">
   <igx-input-group type="border">
-    <input igxInput [(ngModel)]="cardName" id="cardName" name="cardName" placeholder="Buscar cartas">
+    <input igxInput [(ngModel)]="cardName" id="cardName" name="cardName">
+    <igx-hint>Find Name Card</igx-hint>
   </igx-input-group>
-  <button (click)="find()" class="bg-blue-500 rounded py-2 px-4">
+  <button (click)="find()" class="bg-blue-500 rounded px-4">
     Buscar
   </button>
 </div>
+
+
 <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of getCards.data"
        class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">

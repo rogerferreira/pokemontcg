@@ -19,6 +19,7 @@ export class CreateDecksComponent implements OnInit {
   public deck: Decks = {'name':'', 'cards':[]};
   public name: string = '';
   public cardName: string = '';
+  public selected:  number = 1;
 
   constructor(private router: Router,
               private activatedRoute: ActivatedRoute,
@@ -44,6 +45,19 @@ export class CreateDecksComponent implements OnInit {
           console.log('erro');
         },
         complete: () => console.log('FInalizou')
+      }
+    );
+  }
+  public findPage(id: number){
+    this.api.getCards(id).subscribe({
+        next: (data: ResultApi): void => {
+           this.getCards.data = data.data;
+           this.selected = id;
+        },
+        error: ():void => {
+          console.log('erro');
+        },
+        complete: () => console.log('Home finalizou')
       }
     );
   }
