@@ -40,7 +40,7 @@ Home
 - Tela inicial, é feito consulto api e salva no sessão as configurações iniciais.
 - Caso não tenha baralhos cadastros, o botão meus baralhos fica desativado.
 ![alt text](screenProject/Deck-Vazio.png)
-![alt text](screenProject/Deck.png)
+![alt text](screenProject/Decks.png)
 
 Create
 - Tela para criação do baralho, salva no local storage

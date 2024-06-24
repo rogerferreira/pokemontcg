@@ -147,6 +147,7 @@ export class CreateDecksComponent implements OnInit {
   }
 
   closeImage(): void {
+    this.imageZoom.nativeElement.src = '';
     this.divOverlay.nativeElement.style.display = 'none';
   }
 
