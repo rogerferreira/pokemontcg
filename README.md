@@ -4,6 +4,10 @@ Aplicação para consultar de cartas na api (https://docs.pokemontcg.io/#api_v1c
 
 Todo armazenamento dos baralhos feito no local storage, é utilizado session storage para salvamento do retorno da api, para ganhar agilidade.
 
+## Project em Produção
+https://rogerferreira.github.io/pokemontcg
+
+
 ## Especificações Técnicas
 
 - Angular - 16.2.0
@@ -30,3 +34,36 @@ Detalhes do baralho
 - O usuário consegue ver quantos pokemons e cartas de treinador existem no baralho. (atributo supertype)
 - O usuário consegue ver de quantas cores é o baralho. quantos types únicos existem no baralho.
 
+## TELAS
+
+Home 
+- Tela inicial, é feito consulto api e salva no sessão as configurações iniciais.
+- Caso não tenha baralhos cadastros, o botão meus baralhos fica desativado.
+![alt text](screenProject/Deck-Vazio.png)
+![alt text](screenProject/Deck.png)
+
+Create
+- Tela para criação do baralho, salva no local storage
+- Permite Zoom das cartas, para melhor visualização
+- Permite consulta
+  - Por Nome carta
+  - Por Pagina
+- Validações
+  - Nome Deck maior 3 e menor 40 caractéres
+  - Numero de cartas 24 a 60
+  - Pequisa por nome carta maior 3 caractéres
+- Enquanto as validações não são atingidas, o botão de salvar fica oculto.
+![alt text](screenProject/Create.png)
+![alt text](screenProject/Zoom.png)
+![alt text](screenProject/Validacao.png)
+![alt text](screenProject/Validacao-OK.png)
+![alt text](screenProject/Pesquisa.png)
+
+My Deck 
+- Lista Baralhos
+- Exibe Detalhes
+- Edita Baralhos
+- Exclui Baralho
+- Exclui Todos Baralhos
+  ![alt text](screenProject/List.png)
+  ![alt text](screenProject/Detalhe.png)
