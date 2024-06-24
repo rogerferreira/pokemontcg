@@ -1,8 +1,8 @@
-<app-loader *ngIf="loader"></app-loader>
-<div style="display: none;" class="text-red-600"></div>
 <div class="flex mx-auto justify-center items-center">
   <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 m-8">
     <div class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] shadow-xl">
+      <div style="display: none;" class="text-red-600"></div>
+      <div style="display: none;" class="text-green-600"></div>
       <div class="flex flex-col p-8 h-full">
         <div class="text-3xl  font-bold pb-6">{{update? 'Atualizar': 'Criar'}}</div>
         <div class="text-lg pb-12">Precisa se escolher de 24 a 60 cartas, podendo ter se repetir apenas 4 do mesmo nome.</div>
@@ -79,6 +79,7 @@
     </div>
   </div>
 </div>
+<igx-toast #toastWarning></igx-toast>
 
 <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
   <div *ngFor="let card of getCards.data"
@@ -104,3 +105,4 @@
     Voltar
   </button>
 </div>
+<app-loader *ngIf="loader"></app-loader>

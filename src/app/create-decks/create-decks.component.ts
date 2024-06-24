@@ -6,6 +6,7 @@ import {Decks} from "../interfaces/decks.interface";
 import {ConfigApiService} from "../services/config-api.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigApi} from "../interfaces/storage/config-api.interface";
+import {HorizontalAlignment, IgxToastComponent, VerticalAlignment} from "igniteui-angular";
 
 @Component({
   selector: 'app-create-decks',
@@ -22,7 +23,13 @@ export class CreateDecksComponent implements OnInit {
   public selected:  number = 1;
   public update:boolean = false;
   public loader:boolean = false;
+  private settings:{
+    verticalDirection: VerticalAlignment
+  } = {
+    verticalDirection: VerticalAlignment.Middle,
+  };
 
+  @ViewChild('toastWarning', {read: IgxToastComponent}) public toastWarning!: IgxToastComponent;
   @ViewChild('divOverlay') divOverlay!: ElementRef;
   @ViewChild('imageZoom') imageZoom!: ElementRef;
   constructor(private router: Router,
@@ -48,8 +55,9 @@ export class CreateDecksComponent implements OnInit {
           this.getCards.data = result.data;
           this.cardName = '';
         },
-        error: () => {
-          console.log('erro');
+        error: (): void => {
+          this.toastWarning.open('Erro ao buscar api!', this.settings);
+
         },
         complete: ():boolean => this.loader = false
       }
@@ -63,7 +71,7 @@ export class CreateDecksComponent implements OnInit {
            this.selected = id;
         },
         error: ():void => {
-          console.log('erro');
+          this.toastWarning.open('Erro ao buscar api!', this.settings);
         },
         complete: (): boolean => this.loader = false
       }
@@ -84,7 +92,8 @@ export class CreateDecksComponent implements OnInit {
       return;
     }
     if (this.CheckCardNameRepet(card)){
-      console.log('Erro nome repetido');
+      console.log(this.cards);
+      this.toastWarning.open('Erro nome repetido', this.settings);
       return;
     }
     this.openImage(card);
@@ -99,12 +108,12 @@ export class CreateDecksComponent implements OnInit {
   }
 
   private valid(): boolean {
-    if ((this.name.length < 3 || this.name.length > 20)){
-      console.log('Erro Nome');
+    if ((this.name.length < 3 || this.name.length > 40)){
+      this.toastWarning.open('Digite pelo menos 3 letras no nome', this.settings);
       return false;
     }
     if ((this.cards.length < 24 || this.cards.length > 60)){
-      console.log('Erro card');
+      this.toastWarning.open('Mínimo de 24 cartas', this.settings);
       return false;
     }
     return true;
@@ -130,7 +139,7 @@ export class CreateDecksComponent implements OnInit {
       return;
     }
 
-    alert('Nome Duplicado');
+    this.toastWarning.open('Deck com nome duplicado', this.settings);
   }
   openImage(card: any): void {
     this.imageZoom.nativeElement.src = card.images.large;

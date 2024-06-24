@@ -9,7 +9,7 @@ import { MyDecksComponent } from './my-decks/my-decks.component';
 import { CreateDecksComponent } from './create-decks/create-decks.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {FormsModule} from "@angular/forms";
-import {IgxInputGroupModule, IgxSelectModule} from "igniteui-angular";
+import {IgxInputGroupModule, IgxSelectModule, IgxToastComponent} from "igniteui-angular";
 import { LoaderComponent } from './util/loader/loader.component';
 
 
@@ -28,7 +28,8 @@ import { LoaderComponent } from './util/loader/loader.component';
     HttpClientModule,
     FormsModule,
     IgxInputGroupModule,
-    IgxSelectModule
+    IgxSelectModule,
+    IgxToastComponent
   ],
   providers: [],
   bootstrap: [AppComponent]
