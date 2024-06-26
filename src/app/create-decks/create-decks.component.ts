@@ -6,7 +6,8 @@ import {Decks} from "../interfaces/decks.interface";
 import {ConfigApiService} from "../services/config-api.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ConfigApi} from "../interfaces/storage/config-api.interface";
-import {HorizontalAlignment, IgxToastComponent, VerticalAlignment} from "igniteui-angular";
+import {IgxToastComponent, VerticalAlignment} from "igniteui-angular";
+import {environment} from "../../environments/environment";
 
 @Component({
   selector: 'app-create-decks',
@@ -21,6 +22,9 @@ export class CreateDecksComponent implements OnInit {
   public name: string = '';
   public cardName: string = '';
   public selected:  number = 1;
+  public mincards:  number = environment.mincards;
+  public maxcards:  number = environment.maxcards;
+  public maxrepetname:  number = environment.maxrepetname;
   public update:boolean = false;
   public loader:boolean = false;
   private settings:{
@@ -83,37 +87,45 @@ export class CreateDecksComponent implements OnInit {
   }
 
   public CheckCardNameRepet(card: any): boolean {
-    return this.cards.filter((cards): boolean => cards.name == card.name).length == 4;
+    return this.cards.filter((cards): boolean => cards.name == card.name).length >= this.maxrepetname;
   }
 
-  public selectCard(card: any): void {
+   public selectCard(card: any): boolean {
+    if (this.CheckCardNameRepet(card)){
+      this.toastWarning.open('Erro nome repetido', this.settings);
+      return false;
+    }
+
     if (this.CheckCardSelected(card)) {
       this.cards = this.cards.filter((cards): boolean => cards.id != card.id);
-      return;
-    }
-    if (this.CheckCardNameRepet(card)){
-      console.log(this.cards);
-      this.toastWarning.open('Erro nome repetido', this.settings);
-      return;
+      return false;
     }
     this.openImage(card);
     this.cards.push(card);
+    return true;
+  }
+
+  public removeAll(): void {
+    this.cards = [];
   }
 
   public async prepareSave(): Promise<void> {
     if (this.valid()) {
       await this.save(this.name);
-      return ;
     }
   }
 
+  public verifiedSizeDeck(): boolean{
+    return (this.cards.length >= this.mincards && this.cards.length <= this.maxcards)
+  }
+
   private valid(): boolean {
-    if ((this.name.length < 3 || this.name.length > 40)){
+    if ((this.name.length < 3)){
       this.toastWarning.open('Digite pelo menos 3 letras no nome', this.settings);
       return false;
     }
-    if ((this.cards.length < 24 || this.cards.length > 60)){
-      this.toastWarning.open('Mínimo de 24 cartas', this.settings);
+    if ((this.cards.length < this.mincards || this.cards.length > this.maxcards)){
+      this.toastWarning.open('Mínimo de 24 cartas, Máximo de 60 cartas', this.settings);
       return false;
     }
     return true;

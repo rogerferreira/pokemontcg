@@ -1,30 +1,30 @@
 <div class="flex mx-auto justify-center items-center">
-  <div class="grid grid-cols-1 xl:grid-cols-2 gap-5 m-8">
+  <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 m-8">
     <div class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] shadow-xl">
       <div style="display: none;" class="text-red-600"></div>
       <div style="display: none;" class="text-green-600"></div>
       <div class="flex flex-col p-8 h-full">
         <div class="text-3xl  font-bold pb-6">{{update? 'Atualizar': 'Criar'}}</div>
         <div class="text-lg pb-12">Precisa se escolher de 24 a 60 cartas, podendo ter se repetir apenas 4 do mesmo nome.</div>
-        <div class="text-lg">Selecionadas: {{cards.length}} <br>Falta: {{cards.length >= 24 ? 0: (24 - cards.length)}}</div>
+        <div class="text-lg">Selecionadas: {{cards.length}} <br>Falta: {{cards.length >= mincards ? 0: (mincards - cards.length)}}</div>
         <div class="flex flex-col gap-3  text-base">
           <div class="flex flex-row gap-3">
-            <div class="text-{{(name.length >= 3 && name.length <= 40)? 'green': 'red'}}-600">
-              <svg *ngIf="!(name.length >= 3 && name.length <= 40)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <div class="text-{{(name.length >= 3)? 'green': 'red'}}-600">
+              <svg *ngIf="!(name.length >= 3)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
               </svg>
-              <svg *ngIf="(name.length >= 3 && name.length <= 40)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">
+              <svg *ngIf="(name.length >= 3)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">
                 <path d="M20 6 9 17l-5-5"></path>
               </svg>
             </div>
             <div class="font-bold">Nome Deck</div>
           </div>
           <div class="flex flex-row gap-3">
-            <div class="text-{{(cards.length >= 24 && cards.length <= 60)? 'green': 'red'}}-600">
-              <svg *ngIf="!(cards.length >= 24 && cards.length <= 60)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+            <div class="text-{{verifiedSizeDeck()? 'green': 'red'}}-600">
+              <svg *ngIf="!verifiedSizeDeck()" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
               </svg>
-              <svg *ngIf="(cards.length >= 24 && cards.length <= 60)" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">
+              <svg *ngIf="verifiedSizeDeck()" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check">
                 <path d="M20 6 9 17l-5-5"></path>
               </svg>
             </div>
@@ -37,10 +37,10 @@
             <label igxLabel>Name Deck</label>
             <input igxInput [(ngModel)]="name" id="name" name="name">
           </igx-input-group>
-          <button [disabled]="(!(cards.length >= 24 && cards.length <= 60) || !(name.length >= 3 && name.length <= 40))"
+          <button [disabled]="(!verifiedSizeDeck() || !(name.length >= 3))"
                   (click)="prepareSave()"
                   [ngClass]="{
-                    'opacity-50 pointer-events-auto cursor-no-drop': (!(cards.length >= 24 && cards.length <= 60) || !(name.length >= 3 && name.length <= 40))
+                    'opacity-50 pointer-events-auto cursor-no-drop': (!verifiedSizeDeck() || !(name.length >= 3))
                   }"
                   class="w-8/12 bg-yellow-500 hover:bg-yellow-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
             {{update? 'Atualizar': 'Criar'}}
@@ -77,11 +77,30 @@
         </div>
       </div>
     </div>
+    <div class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] text-[#374151] shadow-xl">
+      <div class="flex flex-col p-8">
+        <div class="text-3xl  font-bold pb-6">Meu Baralho ({{cards.length}})</div>
+        <div class="flex flex-wrap  text-base max-h-[300px]  overflow-y-auto" >
+          <div *ngFor="let card of cards"
+               class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
+            <input class="absolute w-full h-full opacity-0 cursor-pointer z-10" type="checkbox" name="selectCards" id="selectCards"
+                   (click)="selectCard(card)"
+            />
+            <img class="max-w-20" [src]="card.images.small"/>
+          </div>
+        </div>
+        <button *ngIf="cards.length > 0" (click)="removeAll()" class="w-full bg-red-500 hover:bg-red-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
+          Limpar baralho
+        </button>
+        <div class="flex flex-grow"></div>
+      </div>
+    </div>
   </div>
 </div>
 <igx-toast #toastWarning></igx-toast>
-
-<div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
+<div class="flex mx-auto justify-center items-center">
+<div class="grid grid-cols-1 m-8">
+<div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto shadow-xl">
   <div *ngFor="let card of getCards.data"
        class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
     <input class="absolute w-full h-full opacity-0 cursor-pointer z-10" type="checkbox" name="cards" id="cards"
@@ -92,6 +111,8 @@
     <img class="max-w-40" [ngClass]="{'opacity-100': checkbox.checked,'opacity-50': !checkbox.checked}"
          [src]="card.images.small"/>
   </div>
+</div>
+</div>
 </div>
 <div class="p-4">
   <div class="overlay" id="divOverlay" #divOverlay (click)="closeImage()">
