@@ -91,15 +91,16 @@ export class CreateDecksComponent implements OnInit {
   }
 
    public selectCard(card: any): boolean {
+     if (this.CheckCardSelected(card)) {
+       this.cards = this.cards.filter((cards): boolean => cards.id != card.id);
+       return false;
+     }
+
     if (this.CheckCardNameRepet(card)){
       this.toastWarning.open('Erro nome repetido', this.settings);
       return false;
     }
 
-    if (this.CheckCardSelected(card)) {
-      this.cards = this.cards.filter((cards): boolean => cards.id != card.id);
-      return false;
-    }
     this.openImage(card);
     this.cards.push(card);
     return true;
