@@ -24,52 +24,57 @@
   </div>
 </div>
 
+<div *ngIf="detail" class="flex mx-auto justify-center items-center">
+  <div class="grid grid-cols-1 xl:grid-cols-1 gap-6 m-8">
+    <div class="flex pt-10">
+      <button class="w-full bg-[#7e22ce] text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform" (click)="hide();">Ocultar</button>
+    </div>
+    <div class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] text-[#374151] shadow-xl">
+      <div class="flex flex-wrap p-8 h-full">
+        <div class="text-3xl  font-bold pb-6"> {{ deck.name }}</div>
+        <div class="flex flex-col gap-2">
+          <div class="grid grid-cols-1 xl:grid-cols-3 ">
+            <div class="w-32 h-5 rounded-xl">
+              Total: <span class="text-blue-600">{{ deck.cards.length }}</span>
+            </div>
+            <div class="w-32 h-5 rounded-xl">
+              Pokémon: <span class="text-blue-600">{{ getCardsCountSuperType('Pokémon') }}</span>
+            </div>
+            <div class="w-32 h-5 rounded-xl">
+              Trainer: <span class="text-blue-600">{{ getCardsCountSuperType('Trainer') }}</span>
+            </div>
+            <div class="w-32 h-5 rounded-xl">
+              Energy: <span class="text-blue-600">{{ getCardsCountSuperType('Energy') }}</span>
+            </div>
+            <div class="w-32 h-5 rounded-xl">
+              Multiple: <span class="text-blue-600">{{ countCards.multipleType }}</span>
+            </div>
+            <div class="w-32 h-5 rounded-xl">
+              Unique: <span class="text-blue-600">{{ countCards.uniqueType }}</span>
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2 mt-6">
+          <div class="grid grid-cols-1 xl:grid-cols-3 ">
+            <div class="w-32 h-5 rounded-xl font-bold" >
+              Types
+            </div>
+          </div>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="grid grid-cols-1 xl:grid-cols-3 ">
+            <div class="w-32 h-5 rounded-xl" *ngFor="let item of countCards.typeFind">
+              {{ item.name }}: <span class="text-green-600">{{ item.value }}</span>
+            </div>
+          </div>
+        </div>
 
-<div *ngIf="detail" class="relative overflow-hidden rounded-lg">
-  <div class="flex mx-auto justify-center items-center">
-    {{ deck.name }}
-  </div>
-  <div class="flex mx-auto justify-center items-center m-2">
-    <table class="table-fixed w-50% text-left">
-      <thead class="uppercase bg-[#6b7280] text-[#e5e7eb]">
-      <tr>
-        <td class="py-2 border text-center  p-4">Total</td>
-        <td class="py-2 border text-center  p-4">Pokémon</td>
-        <td class="py-2 border text-center  p-4">Trainer</td>
-        <td class="py-2 border text-center  p-4">Energy</td>
-        <td class="py-2 border text-center  p-4">Multiple Type</td>
-        <td class="py-2 border text-center  p-4">Unique Type</td>
-      </tr>
-      </thead>
-      <tbody class="bg-white text-gray-500 bg-[#FFFFFF] text-[#6b7280]">
-      <tr class="py-5">
-        <td class="py-5 border text-center  p-4">{{ deck.cards.length }}</td>
-        <td class="py-5 border text-center  p-4">{{ getCardsCountSuperType('Pokémon') }}</td>
-        <td class="py-5 border text-center  p-4">{{ getCardsCountSuperType('Trainer') }}</td>
-        <td class="py-5 border text-center  p-4">{{ getCardsCountSuperType('Energy') }}</td>
-        <td class="py-5 border text-center  p-4">{{ countCards.multipleType }}</td>
-        <td class="py-5 border text-center  p-4">{{ countCards.uniqueType }}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-  <div class="flex mx-auto justify-center items-center m-2">
-    <table class="table-fixed w-50% text-left">
-      <thead class="uppercase bg-[#6b7280] text-[#e5e7eb]">
-      <tr>
-        <td *ngFor="let item of countCards.typeFind" class="py-2 border text-center  p-4">{{ item.name }}
-        </td>
-      </tr>
-      </thead>
-      <tbody class="bg-white text-gray-500 bg-[#FFFFFF] text-[#6b7280]">
-      <tr class="py-5">
-        <td *ngFor="let item of countCards.typeFind" class="py-5 border text-center  p-4">{{ item.value }}
-        </td>
-      </tr>
-      </tbody>
-    </table>
+
+      </div>
+    </div>
   </div>
 </div>
+
 
 
 <div class="p-4">

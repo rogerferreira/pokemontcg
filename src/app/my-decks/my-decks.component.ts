@@ -70,6 +70,9 @@ export class MyDecksComponent implements OnInit {
     this.detail = true;
   }
 
+  public hide() {
+    this.detail = false;
+  }
   public update(id: number) {
     this.router.navigate(['/update/' + id]);
   }
