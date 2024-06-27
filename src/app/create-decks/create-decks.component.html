@@ -101,15 +101,22 @@
 <div class="flex mx-auto justify-center items-center">
 <div class="grid grid-cols-1 m-8">
 <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto shadow-xl">
-  <div *ngFor="let card of getCards.data"
+  <div *ngFor="let card of getCards.data">
+
+  <div
        class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
-    <input class="absolute w-full h-full opacity-0 cursor-pointer z-10" type="checkbox" name="cards" id="cards"
+    <div class=" absolute  z-10 flex mx-auto">
+      <button class="me-2 mb-2 text-sm font-medium text-gray-900 focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 focus:z-10 focus:ring-4 focus:ring-gray-100 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" (click)="openImage(card)"><igx-icon>search</igx-icon></button>
+    </div>
+    <input class="absolute w-full h-full mt-5 opacity-0 cursor-pointer z-10" type="checkbox" name="cards" id="cards"
            (click)="selectCard(card)"
            [checked]="CheckCardSelected(card)"
            #checkbox/>
 
-    <img class="max-w-40" [ngClass]="{'opacity-100': checkbox.checked,'opacity-50': !checkbox.checked}"
+    <img class="max-w-40" [ngClass]="{'opacity-100': checkbox.checked,'opacity-30': !checkbox.checked}"
          [src]="card.images.small"/>
+
+  </div>
   </div>
 </div>
 </div>

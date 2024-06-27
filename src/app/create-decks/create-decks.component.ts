@@ -100,8 +100,6 @@ export class CreateDecksComponent implements OnInit {
       this.toastWarning.open('Erro nome repetido', this.settings);
       return false;
     }
-
-    this.openImage(card);
     this.cards.push(card);
     return true;
   }
@@ -148,7 +146,7 @@ export class CreateDecksComponent implements OnInit {
     if (!this.CheckDecksExist(name)) {
       this.decks = this.decksService.addDeck({'name': name, 'cards': this.cards}, this.decks);
       await this.decksService.createDeck(this.decks);
-      await this.router.navigate(['']);
+      await this.router.navigate(['list']);
       return;
     }
 

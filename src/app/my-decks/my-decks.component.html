@@ -1,10 +1,37 @@
 <div class="flex mx-auto justify-center items-center">
   <div class="grid grid-cols-1 xl:grid-cols-3 gap-6 m-8">
-    <div *ngFor="let deck of decks; index as id"
+    <div *ngFor="let list of decks; index as id"
          class="flex flex-col rounded-2xl w-full xl:w-96 bg-[#ffffff] text-[#374151] shadow-xl">
       <div class="flex flex-col p-8 h-full">
-        <div class="text-3xl  font-bold pb-6">{{ deck.name }}</div>
-        <div class=" text-lg pb-12">Quantidade de cartas {{ deck.cards.length }}</div>
+        <div class="text-3xl  font-bold pb-6">{{ list.name }}</div>
+        <div class="flex flex-col">
+          <div class="grid grid-cols-2">
+            <div class="flex flex-wrap items-center">
+              <img src="assets/cards.png" class="mr-2 w-5 h-5" /> Total: <span class="ml-1 text-blue-600">{{ list.cards.length }}</span>
+            </div>
+            <div class="flex flex-wrap items-center">
+              <img src="assets/pokemon.png" class="mr-2 w-5 h-5"/> Pokemons: <span
+              class="ml-1 text-blue-600">{{ getCardsCountSuperType(list.cards, 'Pokémon') }}</span>
+            </div>
+            <div class="flex flex-wrap items-center">
+              <img src="assets/pokemon-trainer.png" class="mr-2 w-5 h-5"/> Treinadores: <span
+              class="ml-1 text-blue-600">{{ getCardsCountSuperType(list.cards, 'Trainer') }}</span>
+            </div>
+            <div class="flex flex-wrap items-center">
+              <img src="assets/pokemon-energy.png" class="mr-2 w-5 h-5"/> Energia: <span
+              class="ml-1 text-blue-600">{{ getCardsCountSuperType(list.cards, 'Energy') }}</span>
+            </div>
+            <div class="flex flex-wrap items-center" >
+              <img src="assets/unique.png" class="mr-2 w-5 h-5"/> Tipo Único: <span
+              class="ml-1 text-blue-600"> {{getCardsCountType(list.cards).uniqueType}}</span>
+            </div>
+            <div class="flex flex-wrap items-center" >
+              <img src="assets/multiple.png" class="mr-2 w-5 h-5"/> Tipos Multiplos: <span
+              class="ml-1 text-blue-600"> {{getCardsCountType(list.cards).multipleType}}</span>
+            </div>
+
+          </div>
+        </div>
         <div class="flex pt-10">
           <button (click)="get(id)"
                   class="w-full bg-yellow-500 hover:bg-yellow-700 m-2 text-[#ffffff] font-bold text-base p-3 rounded-lg hover:bg-purple-800 active:scale-95 transition-transform transform">
@@ -34,28 +61,6 @@
         <div class="flex flex-col gap-2">
         <div class="text-3xl  font-bold pb-6"> {{ deck.name }}</div>
         </div>
-        <div class="flex flex-col gap-2">
-          <div class="grid grid-cols-1 xl:grid-cols-3 ">
-            <div class="w-32 h-5 rounded-xl">
-              Total: <span class="text-blue-600">{{ deck.cards.length }}</span>
-            </div>
-            <div class="w-32 h-5 rounded-xl">
-              Pokémon: <span class="text-blue-600">{{ getCardsCountSuperType('Pokémon') }}</span>
-            </div>
-            <div class="w-32 h-5 rounded-xl">
-              Trainer: <span class="text-blue-600">{{ getCardsCountSuperType('Trainer') }}</span>
-            </div>
-            <div class="w-32 h-5 rounded-xl">
-              Energy: <span class="text-blue-600">{{ getCardsCountSuperType('Energy') }}</span>
-            </div>
-            <div class="w-32 h-5 rounded-xl">
-              Multiple: <span class="text-blue-600">{{ countCards.multipleType }}</span>
-            </div>
-            <div class="w-32 h-5 rounded-xl">
-              Unique: <span class="text-blue-600">{{ countCards.uniqueType }}</span>
-            </div>
-          </div>
-        </div>
         <div class="flex flex-col gap-2 mt-6">
             <div class="w-32 h-5 rounded-xl font-bold" >
               Types
@@ -63,7 +68,7 @@
         </div>
         <div class="flex flex-col gap-2">
           <div class="grid grid-cols-1 xl:grid-cols-3 ">
-            <div class="w-32 h-5 rounded-xl" *ngFor="let item of countCards.typeFind">
+            <div class="w-32 h-5 rounded-xl" *ngFor="let item of getCardsCountType(deck.cards).typeFind">
               {{ item.name }}: <span class="text-green-600">{{ item.value }}</span>
             </div>
           </div>
@@ -84,10 +89,15 @@
     </div>
   </div>
 </div>
-<div *ngIf="detail" class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto">
-  <div *ngFor="let card of deck.cards"
-       class="flex relative hover:scale-105 border-4 rounded-2xl">
-    <img class="max-w-40" [src]="card.images.small" (click)="openImage(card)"/>
+
+<div *ngIf="detail" class="flex mx-auto justify-center items-center">
+  <div class="grid grid-cols-1 m-8">
+    <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto shadow-xl">
+      <div *ngFor="let card of deck.cards"
+           class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
+        <img class="max-w-40" [src]="card.images.small" (click)="openImage(card)"/>
+      </div>
+    </div>
   </div>
 </div>
 

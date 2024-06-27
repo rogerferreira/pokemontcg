@@ -33,20 +33,20 @@ export class MyDecksComponent implements OnInit {
   }
 
   public get(id: number): void {
+    this.detail = true;
     this.deck = this.decksService.getDeck(id);
-    this.getCardsCountType();
   }
 
-  public getCardsCountSuperType(type: string): number {
-    return this.deck.cards.filter((card: { supertype: string; }) => card.supertype === type).length;
+  public getCardsCountSuperType(cards: any[], type: string): number {
+    return cards.filter((card: { supertype: string; }) => card.supertype === type).length;
   }
 
-  public getCardsCountType(): any {
+  public getCardsCountType(cards: any[]): any {
     let typeFind: any = [];
     let uniqueType: any = [];
     let multipleType: any = [];
-    this.countCards.typeFind = [];
-    this.deck.cards.forEach((card): void => {
+    let contagem: countCard = {'multipleType': 0, 'uniqueType': 0, 'typeFind': []};
+    cards.forEach((card): void => {
       if (Array.isArray(card.types)) {
         card.types.forEach((type: any): void => {
           if (typeFind.hasOwnProperty(type)) {
@@ -63,11 +63,11 @@ export class MyDecksComponent implements OnInit {
       }
     });
     Object.keys(typeFind).forEach((teste: any): void => {
-      this.countCards.typeFind.push({'name': teste, 'value': typeFind[teste]});
+      contagem.typeFind.push({'name': teste, 'value': typeFind[teste]});
     });
-    this.countCards.multipleType = multipleType.length;
-    this.countCards.uniqueType = uniqueType.length;
-    this.detail = true;
+    contagem.multipleType = multipleType.length;
+    contagem.uniqueType = uniqueType.length;
+    return contagem;
   }
 
   public hide() {
