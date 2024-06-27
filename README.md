@@ -49,7 +49,7 @@ Create
   - Por Nome carta
   - Por Pagina
 - Validações
-  - Nome Deck maior 3 e menor 40 caractéres
+  - Nome Deck maior 3 caractéres
   - Numero de cartas 24 a 60
   - Pequisa por nome carta maior 3 caractéres
 - Enquanto as validações não são atingidas, o botão de salvar fica oculto.
