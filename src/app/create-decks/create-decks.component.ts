@@ -90,10 +90,10 @@ export class CreateDecksComponent implements OnInit {
     return this.cards.filter((cards): boolean => cards.name == card.name).length >= this.maxrepetname;
   }
 
-   public selectCard(card: any): boolean {
+   public selectCard(card: any): undefined | boolean {
      if (this.CheckCardSelected(card)) {
        this.cards = this.cards.filter((cards): boolean => cards.id != card.id);
-       return false;
+       return;
      }
 
     if (this.CheckCardNameRepet(card)){
