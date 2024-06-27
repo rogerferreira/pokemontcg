@@ -138,17 +138,17 @@ export class CreateDecksComponent implements OnInit {
 
   public async save(name: string): Promise<void> {
     this.decks = this.decksService.getDecks();
-    if (!this.CheckDecksExist(name)) {
-      this.decks = this.decksService.addDeck({'name': name, 'cards': this.cards}, this.decks);
-      await this.decksService.createDeck(this.decks);
-      await this.router.navigate(['']);
-      return;
-    }
-
     if (this.update){
       this.decks = this.decksService.updateDeck(this.activatedRoute.snapshot.params['id'], this.name, this.cards, this.decks);
       await this.decksService.createDeck(this.decks);
       await this.router.navigate(['list']);
+      return;
+    }
+
+    if (!this.CheckDecksExist(name)) {
+      this.decks = this.decksService.addDeck({'name': name, 'cards': this.cards}, this.decks);
+      await this.decksService.createDeck(this.decks);
+      await this.router.navigate(['']);
       return;
     }
 
