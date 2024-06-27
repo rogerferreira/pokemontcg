@@ -67,3 +67,4 @@ My Deck
 - Exclui Todos Baralhos
   ![alt text](screenProject/List.png)
   ![alt text](screenProject/Detalhe.png)
+  ![alt text](screenProject/Detalhe-Zoom.png)
