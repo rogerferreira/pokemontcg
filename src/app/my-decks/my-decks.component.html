@@ -92,7 +92,7 @@
 
 <div *ngIf="detail" class="flex mx-auto justify-center items-center">
   <div class="grid grid-cols-1 m-8">
-    <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  overflow-y-auto shadow-xl">
+    <div class="flex flex-wrap py-4 gap-4 flex-wrap justify-center max-h-[500px]  rounded-2xl overflow-y-auto shadow-xl bg-slate-100">
       <div *ngFor="let card of deck.cards"
            class="flex relative transition-all duration-300 hover:scale-105 border-4 rounded-2xl">
         <img class="max-w-40" [src]="card.images.small" (click)="openImage(card)"/>
